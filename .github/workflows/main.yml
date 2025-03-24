@@ -4,45 +4,42 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
-jobs: 
-  CI: 
+jobs:
+  CI:
     runs-on: ubuntu-latest
     steps:
       - name: Obtendo o Codigo
-        uses: actions/checkout@v4.2.2 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
+        uses: actions/checkout@v4.2.2
+      - name: Docker Login
+        uses: docker/login-action@v3.4.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Construcao e Envio da Imagem Docker
+      - name: Construcao e envio da imagem docker
         uses: docker/build-push-action@v6
         with:
           context: ./src
           push: true
           file: ./src/Dockerfile
-          tags: | 
-            fabricioveronez/fake-shop-desafio:v${{ github.run_number }}
-            fabricioveronez/fake-shop-desafio
+          tags: |
+              b3rnar0p/fake-shop-desafio:v${{ github.run_number }}
+              b3rnar0p/fake-shop-desafio
 
-
-  CD: 
+  CD:
     needs: [CI]
     runs-on: ubuntu-latest
     steps:
       - name: Obtendo o Codigo
         uses: actions/checkout@v4.2.2
-
       - uses: azure/k8s-set-context@v4
         with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.K8S_KUBECONFIG }}
+           method: kubeconfig
+           kubeconfig: ${{ secrets.K8S_KUBECONFIG }}
 
       - uses: Azure/k8s-deploy@v5
         with:
             manifests: |
-              k8s/deployment.yaml
-            images: | 
-              fabricioveronez/fake-shop-desafio:v${{ github.run_number }}
-
+                k8s/deployment.yaml
+            images: 
+                b3rnar0p/fake-shop-desafio:v${{ github.run_number }}
       
