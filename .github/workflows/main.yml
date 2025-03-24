@@ -24,7 +24,6 @@ jobs:
           tags: |
               b3rnar0p/fake-shop-desafio:v${{ github.run_number }}
               b3rnar0p/fake-shop-desafio
-
   CD:
     needs: [CI]
     runs-on: ubuntu-latest
@@ -43,3 +42,6 @@ jobs:
             images: 
                 b3rnar0p/fake-shop-desafio:v${{ github.run_number }}
       
+      - name: Deploy Prometheus
+        run: |
+          kubectl apply -f prometheus/deployment.yaml
