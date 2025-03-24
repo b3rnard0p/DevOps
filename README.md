@@ -1,7 +1,7 @@
 # Projeto DevOps
 
 ## Sobre o projeto
-- Este projeto foi desenvolvido com o intuito de prática e estudo DevOps, nele eu desenvolvo um site de vendas (Dev) e faço deploy no ambiente de produção (Ops) utilizando as principais ferramentas e conceitos DevOps atualmente.
+- Este projeto foi desenvolvido com o intuito de práticar e estudar DevOps, nele eu desenvolvo um site de vendas (Dev) e faço deploy no ambiente de produção (Ops) utilizando as principais ferramentas e conceitos DevOps atualmente.
 
 ## Tecnologias
 - Docker
